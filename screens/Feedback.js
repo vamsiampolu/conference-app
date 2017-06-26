@@ -1,6 +1,6 @@
 import React from 'react'
 import {Constants} from 'expo'
-import {ScrollView, View, Text, StyleSheet} from 'react-native'
+import {ScrollView, View, Text, StyleSheet, StatusBar} from 'react-native'
 
 export default class Feedback extends React.Component {
   render () {
@@ -12,18 +12,9 @@ export default class Feedback extends React.Component {
         <ScrollView
           style={styles.scrollContainer}
         >
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
-          <Text>The form goes here</Text>
+          <Text style={styles.sectionHeader}>Contact Information</Text>
         </ScrollView>
+        <StatusBar barStyle='light-content' />
       </View>)
   }
 }
@@ -45,11 +36,17 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'purple'
+    backgroundColor: '#050B7A'
   },
   title: {
     fontSize: 18,
     color: '#fff',
     fontWeight: '600'
+  },
+  sectionHeader: {
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    fontSize: 15,
+    fontWeight: '400'
   }
 })
