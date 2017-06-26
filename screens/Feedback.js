@@ -1,9 +1,47 @@
 import React from 'react'
 import {Constants} from 'expo'
-import {ScrollView, View, Text, StyleSheet, StatusBar} from 'react-native'
+import {ScrollView, View, Text, StyleSheet, StatusBar, TextInput} from 'react-native'
+
+import GrowingTextInput from '../components/GrowingInput'
 
 export default class Feedback extends React.Component {
+  constructor (props) {
+    super(props)
+    this.emailRef = this.emailRef.bind(this)
+    this.phoneRef = this.phoneRef.bind(this)
+    this.feedbackInputRef = this.feedbackInputRef.bind(this)
+
+    this.onSubmitFullName = this.onSubmitFullName.bind(this)
+    this.onSubmitEmail = this.onSubmitEmail.bind(this)
+    this.onSubmitPhoneNumber = this.onSubmitPhoneNumber.bind(this)
+  }
+
+  emailRef (view) {
+    this._emailInput = view
+  }
+
+  phoneRef (view) {
+    this._phoneInput = view
+  }
+
+  feedbackInputRef (view) {
+    this._feedbackInput = view
+  }
+
+  onSubmitFullName () {
+    this._emailInput.focus()
+  }
+
+  onSubmitEmail () {
+    this._phoneInput.focus()
+  }
+
+  onSubmitPhoneNumber () {
+    this._feedbackInput.focus()
+  }
+
   render () {
+    const {emailRef, phoneRef, feedbackInputRef, onSubmitFullName, onSubmitEmail, onSubmitPhoneNumber} = this
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -11,8 +49,53 @@ export default class Feedback extends React.Component {
         </View>
         <ScrollView
           style={styles.scrollContainer}
+          keyboardDismissMode='on-drag'
         >
           <Text style={styles.sectionHeader}>Contact Information</Text>
+          <View style={[styles.row, styles.firstRow]}>
+            <TextInput
+              placeholder='Full Name'
+              style={styles.input}
+              autoCapitalize='words'
+              autoCorrect={false}
+              returnKeyType='next'
+              onSubmitEditing={onSubmitFullName}
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              placeholder='Email'
+              style={styles.input}
+              autoCorrect={false}
+              autoCapitalize='none'
+              returnKeyType='next'
+              keyboardType='email-address'
+              ref={emailRef}
+              onSubmitEditing={onSubmitEmail}
+              blurOnSubmit={false}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              placeholder='Phone Number'
+              keyboardType='phone-pad'
+              returnKeyType='next'
+              style={styles.input}
+              ref={phoneRef}
+              onSubmitEditing={onSubmitPhoneNumber}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.sectionHeader}>Feedback</Text>
+            <View style={styles.row}>
+              <GrowingTextInput
+                placeholder='Please provide ample and adequate feedback to help us help you and organize a better conference'
+                minHeight={80}
+                ref={feedbackInputRef}
+                autoCapitalize='sentences'
+              />
+            </View>
+          </View>
         </ScrollView>
         <StatusBar barStyle='light-content' />
       </View>)
@@ -48,5 +131,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 15,
     fontWeight: '400'
+  },
+  input: {
+    flex: 1,
+    height: 50
+  },
+  growingTextInput: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    fontSize: 15
+  },
+  row: {
+    backgroundColor: '#fff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc',
+    paddingHorizontal: 5
+  },
+  firstRow: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#ccc'
   }
 })
