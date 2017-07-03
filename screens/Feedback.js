@@ -1,6 +1,6 @@
 import React from 'react'
 import {Constants} from 'expo'
-import {ScrollView, View, Text, StyleSheet, StatusBar, TextInput} from 'react-native'
+import {ScrollView, View, Text, StyleSheet, StatusBar, TextInput, Slider, Switch} from 'react-native'
 
 import GrowingTextInput from '../components/GrowingInput'
 
@@ -10,10 +10,12 @@ export default class Feedback extends React.Component {
     this.emailRef = this.emailRef.bind(this)
     this.phoneRef = this.phoneRef.bind(this)
     this.feedbackInputRef = this.feedbackInputRef.bind(this)
+    this.sliderRef = this.sliderRef.bind(this)
 
     this.onSubmitFullName = this.onSubmitFullName.bind(this)
     this.onSubmitEmail = this.onSubmitEmail.bind(this)
     this.onSubmitPhoneNumber = this.onSubmitPhoneNumber.bind(this)
+    this.onSubmitFeedbackText = this.onSubmitFeedbackText.bind(this)
   }
 
   emailRef (view) {
@@ -28,6 +30,10 @@ export default class Feedback extends React.Component {
     this._feedbackInput = view
   }
 
+  sliderRef (view) {
+    this._slider = view
+  }
+
   onSubmitFullName () {
     this._emailInput.focus()
   }
@@ -40,8 +46,12 @@ export default class Feedback extends React.Component {
     this._feedbackInput.focus()
   }
 
+  onSubmitFeedbackText () {
+    this._slider.focus()
+  }
+
   render () {
-    const {emailRef, phoneRef, feedbackInputRef, onSubmitFullName, onSubmitEmail, onSubmitPhoneNumber} = this
+    const {emailRef, phoneRef, feedbackInputRef, sliderRef, onSubmitFullName, onSubmitEmail, onSubmitPhoneNumber, onSubmitFeedbackText} = this
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -93,8 +103,18 @@ export default class Feedback extends React.Component {
                 minHeight={80}
                 ref={feedbackInputRef}
                 autoCapitalize='sentences'
+                onSubmitEditing={onSubmitFeedbackText}
               />
             </View>
+            <View style={[styles.row, styles.sliderContainer]}>
+              <Text style={styles.sliderPrev}>Sad</Text>
+              <Slider style={styles.slider} ref={sliderRef} />
+              <Text style={styles.sliderNext}>Happy</Text>
+            </View>
+          </View>
+          <View style={[styles.row, styles.switchContainer]} >
+            <Text style={styles.switchText}>This feedback is urgent</Text>
+            <Switch style={styles.switch} />
           </View>
         </ScrollView>
         <StatusBar barStyle='light-content' />
@@ -150,5 +170,32 @@ const styles = StyleSheet.create({
   firstRow: {
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#ccc'
+  },
+  sliderContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  slider: {
+    flex: 0.75,
+    alignSelf: 'stretch'
+  },
+  sliderPrev: {
+    flex: 0.125
+  },
+  sliderNext: {
+    flex: 0.125
+  },
+  switchContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  switch: {
+    flex: 0.125
+  },
+  switchText: {
+    flex: 0.875
   }
 })
