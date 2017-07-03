@@ -16,6 +16,11 @@ export default class Feedback extends React.Component {
     this.onSubmitEmail = this.onSubmitEmail.bind(this)
     this.onSubmitPhoneNumber = this.onSubmitPhoneNumber.bind(this)
     this.onSubmitFeedbackText = this.onSubmitFeedbackText.bind(this)
+    this.onUrgencyChange = this.onUrgencyChange.bind(this)
+
+    this.state = {
+      urgent: true
+    }
   }
 
   emailRef (view) {
@@ -50,8 +55,27 @@ export default class Feedback extends React.Component {
     this._slider.focus()
   }
 
+  onUrgencyChange () {
+    this.setState(now => {
+      const {urgent} = now
+      return {urgent: !urgent}
+    })
+  }
+
   render () {
-    const {emailRef, phoneRef, feedbackInputRef, sliderRef, onSubmitFullName, onSubmitEmail, onSubmitPhoneNumber, onSubmitFeedbackText} = this
+    const {
+      state,
+      emailRef,
+      phoneRef,
+      feedbackInputRef,
+      sliderRef,
+      onSubmitFullName,
+      onSubmitEmail,
+      onSubmitPhoneNumber,
+      onSubmitFeedbackText,
+      onUrgencyChange
+    } = this
+    const {urgent} = state
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -114,7 +138,7 @@ export default class Feedback extends React.Component {
           </View>
           <View style={[styles.row, styles.switchContainer]} >
             <Text style={styles.switchText}>This feedback is urgent</Text>
-            <Switch style={styles.switch} />
+            <Switch style={styles.switch} value={urgent} onValueChange={onUrgencyChange} />
           </View>
         </ScrollView>
         <StatusBar barStyle='light-content' />
