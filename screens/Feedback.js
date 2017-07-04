@@ -17,7 +17,6 @@ export default class Feedback extends React.Component {
     this.onSubmitPhoneNumber = this.onSubmitPhoneNumber.bind(this)
     this.onSubmitFeedbackText = this.onSubmitFeedbackText.bind(this)
     this.onUrgencyChange = this.onUrgencyChange.bind(this)
-
     this.state = {
       urgent: true
     }

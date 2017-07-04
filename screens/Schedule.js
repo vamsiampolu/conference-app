@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, Text, SectionList, StyleSheet } from 'react-native'
+import { View, Image, Text, SectionList, TouchableOpacity, StyleSheet } from 'react-native'
 
 import ToggleButton from '../components/ToggleButton'
 
@@ -36,9 +36,11 @@ const fridaySections = [
 export default class Schedule extends React.Component {
   constructor (props) {
     super(props)
+
     this.state = {
       selectedDay: 'THURSDAY'
     }
+
     this.onItemPress = this.onItemPress.bind(this)
   }
 
@@ -56,13 +58,21 @@ export default class Schedule extends React.Component {
     </View>)
   }
 
-  renderItem (itemProps) {
+  handlePressRow = (item) => {
+    const {props} = this
+    const {navigation} = props
+    const {navigate} = navigation
+    navigate('EventDetails')
+  }
+
+  renderItem = (itemProps) => {
+    const {handlePressRow} = this
     const {item} = itemProps
     const {title, speaker} = item
-    return (<View key={item.key} style={styles.row}>
+    return (<TouchableOpacity key={item.key} style={styles.row} onPress={handlePressRow}>
       <Text style={styles.rowTitle}>{title}</Text>
       <Text style={styles.rowText}>{speaker}</Text>
-    </View>)
+    </TouchableOpacity>)
   }
 
   render () {
@@ -82,6 +92,10 @@ export default class Schedule extends React.Component {
       />
     </View>)
   }
+}
+
+Schedule.navigationOptions = {
+  header: null
 }
 
 const styles = StyleSheet.create({
