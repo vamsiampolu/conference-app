@@ -1,17 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, Image, View } from 'react-native'
+import {StyleSheet, Text, Image, View} from 'react-native'
 
 export default class EventDetails extends React.Component {
   render () {
+    const {props} = this
+    const {navigation} = props
+    const {state} = navigation
+    const {params} = state
+    const {item} = params
     return (
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>Conference Keynote</Text>
-          <Text style={styles.subtitle}>May 18, 2017</Text>
-          <Text style={styles.description}>Hear about awesome stuff</Text>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.subtitle}>{item.startDate}</Text>
+          <Text style={styles.description}>{item.description}</Text>
         </View>
         <View style={styles.speakerContainer}>
-          <Image style={styles.image} source={{uri: 'https://unsplash.it/200/200?image=1025'}} />
+          <Image
+            style={styles.image}
+            source={{uri: 'https://unsplash.it/200/200?image=1025'}}
+          />
           <View>
             <Text style={styles.speaker}>Lucy Vatne</Text>
             <Text style={styles.bio}>The best doggo ever</Text>

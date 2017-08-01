@@ -1,5 +1,12 @@
 import React from 'react'
-import { View, Image, Text, SectionList, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  SectionList,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native'
 
 import ToggleButton from '../components/ToggleButton'
 
@@ -11,12 +18,12 @@ const thursdaySections = [
   {
     key: 0,
     title: '8:30 AM',
-    data: [{ key: 0, title: 'Registration, breakfast' }]
+    data: [{key: 0, title: 'Registration, breakfast'}]
   },
   {
     key: 1,
     title: '10:00 AM',
-    data: [{ key: 1, title: 'Conference Keynote', speaker: 'Lucy Vatne' }]
+    data: [{key: 1, title: 'Conference Keynote', speaker: 'Lucy Vatne'}]
   }
 ]
 
@@ -24,12 +31,12 @@ const fridaySections = [
   {
     key: 0,
     title: '8:30 AM',
-    data: [{ key: 0, title: 'More breakfast' }]
+    data: [{key: 0, title: 'More breakfast'}]
   },
   {
     key: 1,
     title: '12:00 PM',
-    data: [{ key: 1, title: 'More Keynote', speaker: 'Lucy Vatne' }]
+    data: [{key: 1, title: 'More Keynote', speaker: 'Lucy Vatne'}]
   }
 ]
 
@@ -53,44 +60,60 @@ export default class Schedule extends React.Component {
   renderSectionHeader (itemProps) {
     const {section: item} = itemProps
     const {title} = item
-    return (<View key={item.key} style={styles.sectionHeader}>
-      <Text style={styles.sectionHeaderText}>{title}</Text>
-    </View>)
+    return (
+      <View key={item.key} style={styles.sectionHeader}>
+        <Text style={styles.sectionHeaderText}>{title}</Text>
+      </View>
+    )
   }
 
-  handlePressRow = (item) => {
+  handlePressRow = item => {
     const {props} = this
     const {navigation} = props
     const {navigate} = navigation
-    navigate('EventDetails')
+    navigate('EventDetails', {item})
   }
 
-  renderItem = (itemProps) => {
+  renderItem = itemProps => {
     const {handlePressRow} = this
     const {item} = itemProps
     const {title, speaker} = item
-    return (<TouchableOpacity key={item.key} style={styles.row} onPress={handlePressRow}>
-      <Text style={styles.rowTitle}>{title}</Text>
-      <Text style={styles.rowText}>{speaker}</Text>
-    </TouchableOpacity>)
+    return (
+      <TouchableOpacity
+        key={item.key}
+        style={styles.row}
+        onPress={handlePressRow}
+      >
+        <Text style={styles.rowTitle}>{title}</Text>
+        <Text style={styles.rowText}>{speaker}</Text>
+      </TouchableOpacity>
+    )
   }
 
   render () {
     const {renderItem, renderSectionHeader, onItemPress, state} = this
     const {selectedDay} = state
-    const sections = selectedDay === 'THURSDAY' ? thursdaySections : fridaySections
-    return (<View style={styles.container}>
-      <Image style={styles.hero} source={heroImageSource} >
-        <Image style={styles.logo} source={logoImage} />
-        <Text style={styles.title}>React Europe Conference</Text>
-        <ToggleButton items={items} value={selectedDay} onItemPress={onItemPress} />
-      </Image>
-      <SectionList
-        sections={sections}
-        renderSectionHeader={renderSectionHeader}
-        renderItem={renderItem}
-      />
-    </View>)
+    const sections = selectedDay === 'THURSDAY'
+      ? thursdaySections
+      : fridaySections
+    return (
+      <View style={styles.container}>
+        <Image style={styles.hero} source={heroImageSource}>
+          <Image style={styles.logo} source={logoImage} />
+          <Text style={styles.title}>React Europe Conference</Text>
+          <ToggleButton
+            items={items}
+            value={selectedDay}
+            onItemPress={onItemPress}
+          />
+        </Image>
+        <SectionList
+          sections={sections}
+          renderSectionHeader={renderSectionHeader}
+          renderItem={renderItem}
+        />
+      </View>
+    )
   }
 }
 

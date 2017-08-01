@@ -1,6 +1,15 @@
 import React from 'react'
 import {Constants} from 'expo'
-import {ScrollView, View, Text, StyleSheet, StatusBar, TextInput, Slider, Switch} from 'react-native'
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TextInput,
+  Slider,
+  Switch
+} from 'react-native'
 
 import GrowingTextInput from '../components/GrowingInput'
 
@@ -77,9 +86,6 @@ export default class Feedback extends React.Component {
     const {urgent} = state
     return (
       <View style={styles.container}>
-        <View style={styles.navbar}>
-          <Text style={styles.title}>Feedback Screen</Text>
-        </View>
         <ScrollView
           style={styles.scrollContainer}
           keyboardDismissMode='on-drag'
@@ -135,14 +141,23 @@ export default class Feedback extends React.Component {
               <Text style={styles.sliderNext}>Happy</Text>
             </View>
           </View>
-          <View style={[styles.row, styles.switchContainer]} >
+          <View style={[styles.row, styles.switchContainer]}>
             <Text style={styles.switchText}>This feedback is urgent</Text>
-            <Switch style={styles.switch} value={urgent} onValueChange={onUrgencyChange} />
+            <Switch
+              style={styles.switch}
+              value={urgent}
+              onValueChange={onUrgencyChange}
+            />
           </View>
         </ScrollView>
         <StatusBar barStyle='light-content' />
-      </View>)
+      </View>
+    )
   }
+}
+
+Feedback.navigationOptions = {
+  title: 'Feedback'
 }
 
 const styles = StyleSheet.create({
@@ -151,18 +166,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    paddingVertical: 65
-  },
-  navbar: {
-    height: 65,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#050B7A'
+    paddingVertical: 30
   },
   title: {
     fontSize: 18,
